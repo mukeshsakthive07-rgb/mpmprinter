@@ -9,10 +9,6 @@ import compression from 'compression';
 import path from 'path';
 import { createServer as createViteServer } from 'vite';
 import { db } from './server/db';
-import { requireAuth, AuthRequest as FirebaseAuthRequest } from './src/middleware/auth.ts';
-import { getOrCreateUser, getUsers } from './src/db/users.ts';
-import { createOrderInDb, getOrdersByUser, getAllOrders, updateOrderStatusInDb, deleteOrderFromDb } from './src/db/orders.ts';
-import { adminAuth } from './src/lib/firebase-admin.ts';
 
 interface AuthRequest extends Request {
   user?: import('./src/types').UserProfile;
@@ -30,34 +26,10 @@ const authenticateToken = async (req: AuthRequest, res: Response, next: NextFunc
   const token = authHeader.split(' ')[1];
   try {
     const user = db.validateToken(token);
-    if (user) {
-      req.user = user;
-      req.token = token;
-      return next();
-    }
-
-    // Try Firebase token verification
-    try {
-      const decoded = await adminAuth.verifyIdToken(token);
-      req.user = {
-        id: decoded.uid,
-        email: decoded.email || '',
-        name: decoded.name || 'User',
-        phone: '',
-        username: decoded.email?.split('@')[0] || 'student',
-        role: ADMIN_EMAILS.includes(decoded.email || '') ? 'admin' : 'student',
-        createdAt: new Date().toISOString(),
-        isActive: true,
-        twoFactorEnabled: false,
-        lastLoginAt: new Date().toISOString(),
-      };
-      req.token = token;
-      return next();
-    } catch {
-      // Token invalid
-    }
-
-    return res.status(401).json({ error: 'Invalid token' });
+    if (!user) return res.status(401).json({ error: 'Invalid token' });
+    req.user = user;
+    req.token = token;
+    next();
   } catch (err) {
     res.status(401).json({ error: 'Invalid token' });
   }
@@ -651,67 +623,6 @@ app.post('/api/upload', (req, res) => {
   });
 });
 
-// ==========================================
-// CLOUD SQL POSTGRESQL API ENDPOINTS
-// ==========================================
-
-// Synchronize user to Cloud SQL database upon login/verification
-app.post('/api/users/sync', requireAuth, async (req: FirebaseAuthRequest, res: Response) => {
-  try {
-    const uid = req.user?.uid;
-    const email = req.user?.email || '';
-    const name = req.body?.name || (req.user as any)?.name || '';
-    if (!uid) {
-      return res.status(400).json({ error: 'Missing user ID' });
-    }
-    const userRecord = await getOrCreateUser(uid, email, name);
-    res.json({ success: true, user: userRecord });
-  } catch (err: any) {
-    console.error('Cloud SQL sync user error:', err);
-    res.status(500).json({ error: 'Failed to synchronize user in database' });
-  }
-});
-
-// Create order in Cloud SQL
-app.post('/api/orders', requireAuth, async (req: FirebaseAuthRequest, res: Response) => {
-  try {
-    const uid = req.user?.uid;
-    if (!uid) return res.status(401).json({ error: 'Unauthorized' });
-
-    const orderData = req.body;
-    // Ensure user exists in Cloud SQL users table for foreign key constraint
-    await getOrCreateUser(uid, orderData.customerEmail || req.user?.email || '', orderData.customerName);
-
-    const saved = await createOrderInDb({
-      ...orderData,
-      userId: uid,
-      orderId: orderData.orderId || `MPM-${Math.floor(1000 + Math.random() * 9000)}`,
-    });
-
-    res.status(201).json({ success: true, order: saved });
-  } catch (err: any) {
-    console.error('Cloud SQL create order error:', err);
-    res.status(500).json({ error: 'Failed to save order to database' });
-  }
-});
-
-// Get orders from Cloud SQL
-app.get('/api/orders', requireAuth, async (req: FirebaseAuthRequest, res: Response) => {
-  try {
-    const uid = req.user?.uid;
-    if (!uid) return res.status(401).json({ error: 'Unauthorized' });
-
-    const email = req.user?.email || '';
-    const isAdmin = ADMIN_EMAILS.includes(email);
-
-    const orders = isAdmin ? await getAllOrders() : await getOrdersByUser(uid);
-    res.json({ success: true, orders });
-  } catch (err: any) {
-    console.error('Cloud SQL get orders error:', err);
-    res.status(500).json({ error: 'Failed to fetch orders from database' });
-  }
-});
-
 // Update order status
 app.patch('/api/orders/:orderId/status', authenticateToken, (req: Request, res: Response) => {
   const { orderId } = req.params;
@@ -721,9 +632,6 @@ app.patch('/api/orders/:orderId/status', authenticateToken, (req: Request, res: 
   if (!validStatuses.includes(status)) {
     return res.status(400).json({ error: 'Invalid order status.' });
   }
-
-  // Sync to Cloud SQL in background
-  updateOrderStatusInDb(orderId, status).catch(e => console.warn('Cloud SQL status update:', e));
 
   const updated = db.updateOrderStatus(orderId, status);
   if (!updated) {
@@ -738,10 +646,6 @@ app.patch('/api/orders/:orderId/status', authenticateToken, (req: Request, res: 
 // with a deletion notification sent to user and synchronized across devices.
 app.delete('/api/orders/:orderId', authenticateToken, (req: AuthRequest, res: Response) => {
   const { orderId } = req.params;
-  
-  // Sync deletion to Cloud SQL in background
-  deleteOrderFromDb(orderId).catch(e => console.warn('Cloud SQL delete order:', e));
-
   const result = db.deleteOrder(orderId, req.user!.id);
 
   if (!result.success) {

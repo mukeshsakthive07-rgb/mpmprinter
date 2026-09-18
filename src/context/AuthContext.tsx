@@ -85,16 +85,6 @@ try {
             await setDoc(userRef, profile);
           }
           setUser(profile);
-
-          // Synchronize user to Cloud SQL in background
-          fetch('/api/users/sync', {
-            method: 'POST',
-            headers: {
-              'Authorization': `Bearer ${token}`,
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ name: profile.name || fUser.displayName || 'Student' }),
-          }).catch((err) => console.warn('Cloud SQL user sync background:', err));
         } catch (error) {
           console.error("Error fetching user profile:", error);
           setError("Failed to load user profile. Please try again.");

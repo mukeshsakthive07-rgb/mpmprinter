@@ -140,22 +140,6 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       };
       
       await setDoc(doc(db, 'orders', orderId), newOrder);
-
-      // Synchronize order to Cloud SQL in background
-      try {
-        const token = await firebaseUser.getIdToken();
-        fetch('/api/orders', {
-          method: 'POST',
-          headers: {
-            'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ orderId, ...newOrder }),
-        }).catch((e) => console.warn('Cloud SQL order sync background:', e));
-      } catch (e) {
-        // Non-blocking
-      }
-
       showToast(`Order #${orderId} Placed Successfully!`, 'success', '🚀');
       setActiveTab('orders');
       return { success: true, order: { orderId, ...newOrder } as PrintOrder };
@@ -169,18 +153,6 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     if (!firebaseUser) return { success: false };
     try {
       await deleteDoc(doc(db, 'orders', orderId));
-
-      // Synchronize deletion to Cloud SQL in background
-      try {
-        const token = await firebaseUser.getIdToken();
-        fetch(`/api/orders/${orderId}`, {
-          method: 'DELETE',
-          headers: { 'Authorization': `Bearer ${token}` }
-        }).catch((e) => console.warn('Cloud SQL order delete sync:', e));
-      } catch (e) {
-        // Non-blocking
-      }
-
       showToast(`Order #${orderId} permanently deleted.`, 'info', '🗑️');
       return { success: true };
     } catch (err: any) {
@@ -191,23 +163,6 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const updateOrderStatus = async (orderId: string, status: PrintOrder['status']) => {
     try {
       await updateDoc(doc(db, 'orders', orderId), { status });
-
-      // Synchronize status update to Cloud SQL in background
-      if (firebaseUser) {
-        try {
-          const token = await firebaseUser.getIdToken();
-          fetch(`/api/orders/${orderId}/status`, {
-            method: 'PATCH',
-            headers: {
-              'Authorization': `Bearer ${token}`,
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ status }),
-          }).catch((e) => console.warn('Cloud SQL order status sync:', e));
-        } catch (e) {
-          // Non-blocking
-        }
-      }
       showToast(`Order status updated to ${status}.`, 'info', '🔄');
       return true;
     } catch (err) {

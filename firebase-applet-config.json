@@ -1,12 +1,12 @@
 {
-  "projectId": "inspirational-century-nlxdt",
-  "appId": "1:18104510173:web:280279cc4f0872a3b5dd34",
-  "apiKey": "AIzaSyAq2cUfodZriTB8-lyqmLq8Z4Xm5f4HwVM",
-  "authDomain": "inspirational-century-nlxdt.firebaseapp.com",
+  "projectId": "mpmprinter-99f63",
+  "appId": "1:571507438486:web:12705b20ca76df6f6363b7",
+  "apiKey": "AIzaSyCvCohgiN6siaN_UM_uyymOSEJPe-e3YoY",
+  "authDomain": "mpmprinter-99f63.firebaseapp.com",
   "firestoreDatabaseId": "ai-studio-mpmprinter20-d8feff93-4396-40e3-ba49-b27e49097982",
-  "storageBucket": "inspirational-century-nlxdt.firebasestorage.app",
-  "messagingSenderId": "18104510173",
+  "storageBucket": "mpmprinter-99f63.firebasestorage.app",
+  "messagingSenderId": "571507438486",
   "measurementId": "",
-  "oAuthClientId": "18104510173-6dmg0igaod3f7an3f0sv8em46fa0cfga.apps.googleusercontent.com",
+  "oAuthClientId": "571507438486-sp6g3eii8qnjp6n6ip8kh3fpnsruvnbf.apps.googleusercontent.com",
   "recaptchaSiteKey": ""
 }
