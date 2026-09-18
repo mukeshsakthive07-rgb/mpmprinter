@@ -1,0 +1,263 @@
+{
+  "users": [
+    {
+      "id": "usr-mukesh-01",
+      "name": "Mukesh Sakthivel",
+      "email": "mukeshsakthive07@gmail.com",
+      "phone": "+91 94430 71443",
+      "username": "mukesh07",
+      "avatarUrl": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&auto=format&fit=crop&q=80",
+      "role": "student",
+      "isActive": true,
+      "twoFactorEnabled": false,
+      "createdAt": "2026-09-14T10:30:09.891Z",
+      "lastLoginAt": "2026-09-14T10:30:09.892Z",
+      "passwordHash": "b7ac8bcb1ac0ad413c1219ee47d623e70e0d074065f888acc7b860bd7e351042c5ced54721fd7cd8667ad0c51a1628101f4a80c5c23b09e02b633d8dddb27f83",
+      "passwordSalt": "23dbcc3d8f784b7a7355002cf36662ce"
+    },
+    {
+      "id": "usr-admin-01",
+      "name": "Mugilan & Mukesh",
+      "email": "admin@mmprinter.com",
+      "phone": "+91 98765 43210",
+      "username": "admin",
+      "avatarUrl": "https://images.unsplash.com/photo-1542157585-ef20bbcce4e7?w=200&auto=format&fit=crop&q=80",
+      "role": "receiver",
+      "isActive": true,
+      "twoFactorEnabled": false,
+      "createdAt": "2026-09-14T10:30:09.892Z",
+      "lastLoginAt": "2026-09-14T11:01:40.543Z",
+      "passwordHash": "b7ac8bcb1ac0ad413c1219ee47d623e70e0d074065f888acc7b860bd7e351042c5ced54721fd7cd8667ad0c51a1628101f4a80c5c23b09e02b633d8dddb27f83",
+      "passwordSalt": "23dbcc3d8f784b7a7355002cf36662ce"
+    }
+  ],
+  "sessions": [
+    {
+      "token": "mmp_tok_2d725f9ec9bd6361f07739ca3fb9b7da1499cd10d08e543f0b678ff59d0821c2",
+      "userId": "usr-admin-01",
+      "createdAt": 1789382174580,
+      "expiresAt": 1791974174580,
+      "rememberMe": true,
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36",
+      "ip": "127.0.0.1"
+    },
+    {
+      "token": "mmp_tok_0a099272780cd499bf33616739de8130e11ace908802d57475ea497e7788168d",
+      "userId": "usr-admin-01",
+      "createdAt": 1789383700543,
+      "expiresAt": 1789470100543,
+      "rememberMe": false,
+      "userAgent": "curl/7.88.1",
+      "ip": "127.0.0.1"
+    }
+  ],
+  "orders": [
+    {
+      "orderId": "MMP-1042",
+      "userId": "usr-mukesh-01",
+      "customerName": "Mukesh Sakthivel",
+      "customerEmail": "mukeshsakthive07@gmail.com",
+      "customerPhone": "+91 94430 71443",
+      "serviceId": "bw-double",
+      "serviceTitle": "Double Side (Black & White)",
+      "rate": 1.4,
+      "unit": "page",
+      "copies": 2,
+      "pageRange": "All Pages (1-24)",
+      "paperSize": "A4",
+      "orientation": "Portrait",
+      "binding": "spiral",
+      "bindingCost": 30,
+      "notes": "Please bind with blue translucent front cover",
+      "deliveryAddress": "Room 304, Boys Hostel Block A",
+      "files": [
+        {
+          "id": "file-101",
+          "name": "CAD_Engineering_Design_Project.pdf",
+          "size": "4.2 MB",
+          "type": "application/pdf",
+          "pageCount": 24
+        }
+      ],
+      "totalPrice": 97.19999999999999,
+      "status": "printing",
+      "createdAt": "2026-09-14T08:30:09.892Z",
+      "completedAt": null
+    },
+    {
+      "orderId": "MMP-0985",
+      "userId": "usr-mukesh-01",
+      "customerName": "Mukesh Sakthivel",
+      "customerEmail": "mukeshsakthive07@gmail.com",
+      "customerPhone": "+91 94430 71443",
+      "serviceId": "colour",
+      "serviceTitle": "Colour Print Out",
+      "rate": 6.8,
+      "unit": "page",
+      "copies": 1,
+      "pageRange": "Pages 1-5",
+      "paperSize": "A4",
+      "orientation": "Portrait",
+      "binding": "none",
+      "bindingCost": 0,
+      "notes": "High gloss print for symposium seminar presentation",
+      "deliveryAddress": "Direct Shop Pickup",
+      "files": [
+        {
+          "id": "file-102",
+          "name": "Robotics_Symposium_Poster.pdf",
+          "size": "8.1 MB",
+          "type": "application/pdf",
+          "pageCount": 5
+        }
+      ],
+      "totalPrice": 34,
+      "status": "completed",
+      "createdAt": "2026-09-12T10:30:09.892Z",
+      "completedAt": "11:45 AM"
+    }
+  ],
+  "notifications": [
+    {
+      "id": "notif-1",
+      "userId": "usr-mukesh-01",
+      "title": "Order In Printing 🖨️",
+      "message": "Your print order #MMP-1042 is currently on the printer at MM PRINTER.",
+      "type": "order",
+      "read": false,
+      "createdAt": "2026-09-14T10:00:09.892Z",
+      "relatedOrderId": "MMP-1042"
+    },
+    {
+      "id": "notif-2",
+      "userId": "usr-mukesh-01",
+      "title": "Printout Ready for Pickup! 🎉",
+      "message": "Order #MMP-0985 has been printed and is ready for pickup at MM PRINTER shop counter.",
+      "type": "order",
+      "read": true,
+      "createdAt": "2026-09-12T12:30:09.892Z",
+      "relatedOrderId": "MMP-0985"
+    }
+  ],
+  "settings": {
+    "usr-mukesh-01": {
+      "notifications": {
+        "email": true,
+        "order": true,
+        "whatsapp": true,
+        "securityAlerts": true,
+        "promotional": false,
+        "systemUpdates": true
+      },
+      "appearance": {
+        "theme": "system",
+        "fontSize": "medium",
+        "compactMode": false
+      },
+      "languageAndRegion": {
+        "language": "English",
+        "country": "India",
+        "currency": "INR",
+        "currencySymbol": "₹",
+        "timeZone": "Asia/Kolkata (IST)",
+        "dateFormat": "DD/MM/YYYY"
+      },
+      "privacy": {
+        "profileVisibility": "campus",
+        "dataSharing": false,
+        "personalizedRecommendations": true,
+        "activityTracking": false
+      },
+      "addresses": [
+        {
+          "id": "addr-default",
+          "label": "Campus Hostel Block A",
+          "addressLine": "Room 304, Boys Hostel Block A, College Campus, Erode Main Road",
+          "isDefault": true
+        },
+        {
+          "id": "addr-dept",
+          "label": "Mechanical Dept Labs",
+          "addressLine": "CAD/CAM Lab, 2nd Floor, Mechanical Engineering Block",
+          "isDefault": false
+        }
+      ],
+      "paymentMethods": [
+        {
+          "id": "pm-upi-1",
+          "type": "upi",
+          "title": "Google Pay UPI",
+          "maskedInfo": "mukeshsakthi@okaxis",
+          "isDefault": true
+        },
+        {
+          "id": "pm-card-1",
+          "type": "card",
+          "title": "HDFC Platinum Debit Card",
+          "maskedInfo": "•••• •••• •••• 4289",
+          "isDefault": false
+        }
+      ]
+    },
+    "usr-admin-01": {
+      "notifications": {
+        "email": true,
+        "order": true,
+        "whatsapp": true,
+        "securityAlerts": true,
+        "promotional": false,
+        "systemUpdates": true
+      },
+      "appearance": {
+        "theme": "system",
+        "fontSize": "medium",
+        "compactMode": false
+      },
+      "languageAndRegion": {
+        "language": "English",
+        "country": "India",
+        "currency": "INR",
+        "currencySymbol": "₹",
+        "timeZone": "Asia/Kolkata (IST)",
+        "dateFormat": "DD/MM/YYYY"
+      },
+      "privacy": {
+        "profileVisibility": "campus",
+        "dataSharing": false,
+        "personalizedRecommendations": true,
+        "activityTracking": false
+      },
+      "addresses": [
+        {
+          "id": "addr-default",
+          "label": "Campus Hostel Block A",
+          "addressLine": "Room 304, Boys Hostel Block A, College Campus, Erode Main Road",
+          "isDefault": true
+        },
+        {
+          "id": "addr-dept",
+          "label": "Mechanical Dept Labs",
+          "addressLine": "CAD/CAM Lab, 2nd Floor, Mechanical Engineering Block",
+          "isDefault": false
+        }
+      ],
+      "paymentMethods": [
+        {
+          "id": "pm-upi-1",
+          "type": "upi",
+          "title": "Google Pay UPI",
+          "maskedInfo": "mukeshsakthi@okaxis",
+          "isDefault": true
+        },
+        {
+          "id": "pm-card-1",
+          "type": "card",
+          "title": "HDFC Platinum Debit Card",
+          "maskedInfo": "•••• •••• •••• 4289",
+          "isDefault": false
+        }
+      ]
+    }
+  },
+  "passwordResets": []
+}

@@ -1,0 +1,8 @@
+{
+  "name": "MPM printer.2.0",
+  "description": "On-demand smart printing portal with real-time PDF page counting, hybrid color detection, instant price calculation, and order tracking.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

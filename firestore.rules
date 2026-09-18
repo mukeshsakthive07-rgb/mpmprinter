@@ -1,0 +1,57 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isAdmin() { 
+      return isSignedIn() && 
+             ('email' in request.auth.token) && 
+             request.auth.token.email.lower() == 'mukeshsakthive07@gmail.com'; 
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+    
+    function isValidId(id) { 
+      return id is string && id.size() > 0 && id.size() <= 128 && id.matches('^[a-zA-Z0-9_-]+$'); 
+    }
+
+    match /users/{userId} {
+      allow get: if isValidId(userId) && (isAdmin() || isOwner(userId));
+      allow list: if isAdmin();
+      
+      allow create: if isValidId(userId) && isOwner(userId) && 
+                    request.resource.data.keys().hasAll(['id', 'email', 'name', 'role', 'createdAt']) &&
+                    (request.resource.data.role == 'student' || isAdmin());
+                    
+      allow update: if isValidId(userId) && (
+        (isAdmin()) || 
+        (isOwner(userId) && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['name', 'phone', 'username', 'twoFactorEnabled', 'avatarUrl', 'settings', 'isActive', 'lastLoginAt']))
+      );
+      allow delete: if false;
+    }
+
+    match /orders/{orderId} {
+      allow get: if isValidId(orderId) && (isAdmin() || (isSignedIn() && resource.data.userId == request.auth.uid));
+      allow list: if isAdmin() || (isSignedIn() && resource.data.userId == request.auth.uid);
+      
+      allow create: if isValidId(orderId) && isSignedIn() 
+                    && request.resource.data.userId == request.auth.uid
+                    && request.resource.data.status == 'pending';
+                    
+      allow update: if isValidId(orderId) && isSignedIn() && (
+        (isAdmin() && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status', 'completedAt'])) ||
+        (resource.data.userId == request.auth.uid && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status']))
+      );
+      allow delete: if isValidId(orderId) && (isAdmin() || resource.data.userId == request.auth.uid);
+    }
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile",
+      "type": "object",
+      "properties": {
+        "email": { "type": "string", "maxLength": 100 },
+        "name": { "type": "string", "maxLength": 100 },
+        "role": { "type": "string", "enum": ["student", "admin"] },
+        "phone": { "type": "string", "maxLength": 20 }
+      },
+      "required": ["email", "name", "role"]
+    },
+    "Order": {
+      "title": "Order",
+      "description": "Print order",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "maxLength": 128 },
+        "customerName": { "type": "string", "maxLength": 100 },
+        "serviceTitle": { "type": "string", "maxLength": 100 },
+        "copies": { "type": "number" },
+        "status": { "type": "string", "enum": ["pending", "printing", "completed", "cancelled"] },
+        "createdAt": { "type": "number" }
+      },
+      "required": ["userId", "status", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/User" },
+      "description": "User profiles"
+    },
+    "/orders/{orderId}": {
+      "schema": { "$ref": "#/entities/Order" },
+      "description": "Print orders"
+    }
+  }
+}

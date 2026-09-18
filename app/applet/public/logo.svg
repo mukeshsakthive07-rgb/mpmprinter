@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" width="100%" height="100%">
+  <defs>
+    <!-- CMYK Colors & Gradients -->
+    <linearGradient id="swooshGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0066ff"/>
+      <stop offset="50%" stop-color="#0099ff"/>
+      <stop offset="100%" stop-color="#00d4ff"/>
+    </linearGradient>
+    
+    <linearGradient id="textCyanGreen" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#00F0FF" />
+      <stop offset="100%" stop-color="#00E676" />
+    </linearGradient>
+  </defs>
+
+  <!-- Orbital Blue Swoosh (Background curve) -->
+  <path d="M 55 270 C 40 200, 100 130, 250 115 C 380 100, 465 140, 460 215 C 455 275, 375 305, 335 315 C 410 280, 435 210, 395 155 C 350 100, 215 100, 115 145 C 65 170, 45 220, 55 270 Z" fill="url(#swooshGrad)" />
+
+  <!-- Top Feed Paper (White sheet with folded blue corner) -->
+  <path d="M 165 145 L 165 65 L 290 65 L 335 110 L 335 145 Z" fill="#ffffff" stroke="#0a1931" stroke-width="8" stroke-linejoin="round"/>
+  
+  <!-- Folded blue tab -->
+  <path d="M 290 65 L 290 110 L 335 110 Z" fill="#0088ff" stroke="#0a1931" stroke-width="8" stroke-linejoin="round"/>
+
+  <!-- Printer Main Body -->
+  <rect x="105" y="140" width="290" height="110" rx="30" fill="#0a1931" />
+  
+  <!-- Subtle Body Detail Line -->
+  <rect x="160" y="162" width="180" height="9" rx="4.5" fill="#4d648d" />
+  
+  <!-- Status Lights -->
+  <circle cx="362" cy="166" r="8" fill="#00b4d8" />
+  <circle cx="362" cy="188" r="8" fill="#00e676" />
+
+  <!-- Paper Output Slot -->
+  <rect x="155" y="195" width="190" height="34" rx="8" fill="#040b17" stroke="#ffffff" stroke-width="5" />
+
+  <!-- Ejected Output Paper (Trapezoid perspective) -->
+  <polygon points="175,205 325,205 348,290 152,290" fill="#ffffff" stroke="#0a1931" stroke-width="8" stroke-linejoin="round" />
+
+  <!-- CMYK Color Swatches on Printed Paper -->
+  <!-- Cyan -->
+  <polygon points="175,217 207,217 197,278 165,278" fill="#00b4d8" />
+  <!-- Magenta -->
+  <polygon points="213,217 245,217 240,278 208,278" fill="#e91e63" />
+  <!-- Yellow -->
+  <polygon points="251,217 283,217 283,278 251,278" fill="#ffd600" />
+  <!-- Key / Black -->
+  <polygon points="289,217 321,217 326,278 294,278" fill="#1b1b1b" />
+
+  <!-- Forefront Swoosh Arc (Bottom Left overlay) -->
+  <path d="M 40 265 C 50 330, 150 340, 235 325 C 130 335, 60 305, 40 265 Z" fill="#0077ff" />
+
+  <!-- TYPOGRAPHY: "MPM" -->
+  <g fill="url(#textCyanGreen)">
+    <!-- M -->
+    <path d="M 52 335 L 85 335 L 102 385 L 120 335 L 152 335 L 152 425 L 122 425 L 122 378 L 108 415 L 96 415 L 82 378 L 82 425 L 52 425 Z" />
+    
+    <!-- P -->
+    <path d="M 168 335 L 222 335 C 248 335, 264 348, 264 372 C 264 396, 248 409, 222 409 L 198 409 L 198 425 L 168 425 Z M 198 358 L 198 386 L 218 386 C 228 386, 234 381, 234 372 C 234 363, 228 358, 218 358 Z" />
+    <!-- P Corner Blue Accent Fold -->
+    <polygon points="168,335 208,335 168,382" fill="#0088ff" />
+
+    <!-- M -->
+    <path d="M 280 335 L 313 335 L 330 385 L 348 335 L 380 335 L 380 425 L 350 425 L 350 378 L 336 415 L 324 415 L 310 378 L 310 425 L 280 425 Z" />
+  </g>
+
+  <!-- SUBTITLE: "PRINTER" With Side Wings -->
+  <!-- Left Blue Wing -->
+  <polygon points="52,450 115,446 115,454" fill="#0088ff" />
+  <!-- "PRINTER" Text -->
+  <text x="216" y="457" font-family="'Plus Jakarta Sans', sans-serif" font-weight="900" font-size="28" letter-spacing="9" fill="url(#textCyanGreen)" text-anchor="middle">PRINTER</text>
+  <!-- Right Blue Wing -->
+  <polygon points="380,450 317,446 317,454" fill="#0088ff" />
+</svg>
